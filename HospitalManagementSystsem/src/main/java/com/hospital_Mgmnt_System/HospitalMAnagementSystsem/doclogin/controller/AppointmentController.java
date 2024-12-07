@@ -9,12 +9,14 @@ import javax.management.AttributeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hospital_Mgmnt_System.HospitalMAnagementSystsem.doclogin.entity.Appointment;
 import com.hospital_Mgmnt_System.HospitalMAnagementSystsem.doclogin.repository.AppointmentRepository;
+import com.hospital_Mgmnt_System.HospitalMAnagementSystsem.doclogin.service.AppointmentService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,12 +33,14 @@ public class AppointmentController {
 	@Autowired
 	private AppointmentRepository appointmentRepository;
 	
+	@Autowired
+	AppointmentService appointmentService;
 
 
-	public AppointmentController(AppointmentRepository appointmentRepository) {
-		super();
-		this.appointmentRepository = appointmentRepository;
-	}
+//	public AppointmentController(AppointmentRepository appointmentRepository) {
+//		super();
+//		this.appointmentRepository = appointmentRepository;
+//	}
 
 
 
@@ -59,6 +63,12 @@ public class AppointmentController {
 		Map<String, Boolean> response = new HashMap<String, Boolean>();
 		response.put("Deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
+	}
+	
+	@PutMapping("/updateSymptoms/{id}")
+	public Appointment updateSymptoms(@PathVariable long id, @RequestBody Appointment appointmentDetails ) throws AttributeNotFoundException{
+		return appointmentService.updateAppointmentById(id, appointmentDetails);
+		
 	}
 	
 }
