@@ -45,13 +45,16 @@ public class AppointmentController {
 
 
 	@PostMapping("/add")
-	public Appointment creatAppointment(@RequestBody Appointment appointment){
-		return appointmentRepository.save(appointment);
+	public ResponseEntity<Appointment> creatAppointment(@RequestBody Appointment appointment){
+		Appointment appointment1 =  appointmentRepository.save(appointment);
+		return ResponseEntity.ok(appointment1);
 	}
 	
 	@GetMapping("/fetch")
-	public List<Appointment> getAppointments() {
-		return appointmentRepository.findAll();
+	public ResponseEntity<List<Appointment>> getAppointments() {
+		List<Appointment> appointment= appointmentRepository.findAll();
+		return ResponseEntity.ok(appointment);
+		
 	}	
 	
 	
@@ -66,8 +69,9 @@ public class AppointmentController {
 	}
 	
 	@PutMapping("/updateSymptoms/{id}")
-	public Appointment updateSymptoms(@PathVariable long id, @RequestBody Appointment appointmentDetails ) throws AttributeNotFoundException{
-		return appointmentService.updateAppointmentById(id, appointmentDetails);
+	public ResponseEntity<Appointment> updateSymptoms(@PathVariable long id, @RequestBody Appointment appointmentDetails ) throws AttributeNotFoundException{
+		Appointment appointment= appointmentService.updateAppointmentById(id, appointmentDetails);
+		return ResponseEntity.ok(appointment);
 		
 	}
 	
